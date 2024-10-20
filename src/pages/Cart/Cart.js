@@ -2,11 +2,23 @@ import React, { useContext } from 'react'
 import './Cart.css'
 import { StoreContext } from '../../Context/StoreContext'
 import { useNavigate } from 'react-router-dom';
+import { warningToaster } from '../../Toaster/ALertToaster';
 
-const Cart = () => {
+const Cart = (props) => {
 
-  const { cartItem, food_list, removeFromCard, getTotalCartAmount } = useContext(StoreContext);
+  const { cartItem, productList, removeFromCard, getTotalCartAmount } = useContext(StoreContext);
   const navigate = useNavigate();
+
+  const processToCheckOut = ()=>{
+   const isLogged = localStorage.getItem("Token")
+    if(!!isLogged){
+      navigate('/order')
+    }else{
+      warningToaster("please Login")
+      props.setShowLogin(true)
+    }
+  }
+
   return (
     <div className='cart'>
       <div className="cart-items">
@@ -20,16 +32,16 @@ const Cart = () => {
         </div>
         <br />
         <hr />
-        {food_list.map((item, index) => {
+        {productList.map((item, index) => {
           if (cartItem[item._id] > 0) {
             return (
               <div key={index}>
                 <div className='cart-items-title cart-items-item'>
                   <img src={item.image} alt={item.name} />
                   <p>{item.name}</p>
-                  <p>${item.price}</p>
+                  <p>₹{item.price}</p>
                   <p>{cartItem[item._id]}</p>
-                  <p>${item.price * cartItem[item._id]}</p>
+                  <p>₹{item.price * cartItem[item._id]}</p>
                   <p onClick={() => removeFromCard(item._id)} className='cross'>-</p>
                 </div>
                 <hr />
@@ -45,20 +57,20 @@ const Cart = () => {
           <div>
             <div className="cart-total-details">
               <p>SubTotal</p>
-              <p>${getTotalCartAmount()}</p>
+              <p>₹{getTotalCartAmount()}</p>
             </div>
             <hr />
             <div className="cart-total-details">
               <p>Delivery Fee</p>
-              <p>${getTotalCartAmount() === 0 ? 0 : 2}</p>
+              <p>₹{getTotalCartAmount() === 0 ? 0 : 2}</p>
             </div>
             <hr />
             <div className="cart-total-details">
               <b>Total</b>
-              <b>${getTotalCartAmount() === 0 ? 0 : getTotalCartAmount() + 2}</b>
+              <b>₹{getTotalCartAmount() === 0 ? 0 : getTotalCartAmount() + 2}</b>
             </div>
           </div>
-          <button onClick={() => navigate('/order')}>PROCEED TO CHECKOUT</button>
+          <button onClick={() => processToCheckOut()}>PROCEED TO CHECKOUT</button>
         </div>
         <div className="cart-promocode">
           <div>

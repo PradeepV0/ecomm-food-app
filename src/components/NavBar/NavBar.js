@@ -3,7 +3,8 @@ import './NavBar.css';
 import { Link } from 'react-router-dom';
 import { assets } from '../../assets/assets'
 import { StoreContext } from '../../Context/StoreContext';
-
+import { ToastContainer } from 'react-toastify';
+import '../../App.css'
 const NavBar = ({setShowLogin}) => {
 
     const [menu, setMenu] = useState("home");
@@ -12,7 +13,7 @@ const NavBar = ({setShowLogin}) => {
 
     return (
         <div className='navbar'>
-           <Link to='/'> <img src={assets.logo} alt='' className='logo' /></Link>
+           <Link to='/'> <h1>Rider Food</h1></Link>
             <ul className="navbar-menu">
                 <Link to='/' onClick={() => setMenu("home")} className={menu === "home" ? "active" : ""}>home</Link>
                 <a href='#explore-menu' onClick={() => setMenu("menu")} className={menu === "menu" ? "active" : "" }>menu</a>
@@ -28,6 +29,8 @@ const NavBar = ({setShowLogin}) => {
                 </div>
                 <button onClick={() => setShowLogin(true)}>sign in</button>
             </div>
+            <ToastContainer/>
+
         </div>
     )
 }

@@ -1,12 +1,32 @@
-import { createContext, useState } from "react";
-import { food_list } from "../assets/assets";
+import { createContext, useEffect, useState } from "react";
+import { getIndianFoods } from "../APi/IndianFoodsApi";
 
 export const StoreContext = createContext(null)
 
 
 const StoreContextProvider = (props) => {
 
+    const [productList,setProductList] = useState([])
+
     const [cartItem, setCartItem] = useState({});
+
+    useEffect(()=>{
+        getProductDetails()
+    },[])
+
+    function getProductDetails(){
+        const responseData = []
+        const response = getIndianFoods()
+        response.then(
+            (data)=>{
+                const respData = data.response
+                setProductList(respData)
+                responseData.push(...respData)
+                return responseData
+            }
+        )
+    }
+
 
     const addtoCard = (itemId) => {
         if (!cartItem[itemId]) {
@@ -31,17 +51,23 @@ const StoreContextProvider = (props) => {
 
     const getTotalCartAmount = () => {
         let totalAmount = 0;
+        const response = getIndianFoods()        
+        response.then(
+            (res)=>{
+      
         for (const item in cartItem) {
             if (cartItem[item] > 0) {
-                let itemInfo = food_list.find((product) => product._id === item)
+                let itemInfo = res.response.find((product) => product._id === item)
                 totalAmount += itemInfo.price * cartItem[item];
             }
         }
+    }
+)
         return totalAmount;
     }
 
     const contextValue = {
-        food_list,
+        productList,
         cartItem,
         setCartItem,
         addtoCard,

@@ -1,8 +1,32 @@
-import React from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import './ExploreMenu.css'
-import { menu_list } from '../../assets/assets'
+import { StoreContext } from '../../Context/StoreContext';
 
 const ExploreMenu = ({ category, setCategory }) => {
+
+    const { productList } = useContext(StoreContext);
+    const [catogeryList,setCatogeryList] = useState({})
+
+    useEffect(()=>{
+        getMenuList()
+    },[productList])
+    const getMenuList = () =>{
+        if(productList.length > 0){
+            const catageryLs =    productList.reduce((acc, item) => {
+                const category = item.category;
+                if (!acc[category]) {
+                    acc[category] = [];
+                }
+                acc[category].push(item);
+                return acc;
+            }, {});
+            setCatogeryList(catageryLs);
+            
+        }
+    }
+
+
+
     return (
         <div className='explore-menu' id='explore-menu'>
             <h1>Explore Our Menu</h1>
@@ -12,14 +36,14 @@ const ExploreMenu = ({ category, setCategory }) => {
                 your cravings and elevate your experience, one delicious meal at a time.
             </p>
             <div className='explore-menu-list'>
-                {menu_list.map((item, index) => {
+                {Object.keys(catogeryList).length > 0 && Object.entries(catogeryList).map((item, index) => {
                     return (
                         <div
-                            onClick={() => setCategory(prev => prev === item.menu_name ? "All" : item.menu_name)}
+                            onClick={() => setCategory(prev => prev === item[0] ? "All" : item[0])}
                             key={index}
                             className='explore-menu-list-item'>
-                            <img className={category===item.menu_name ? "active" : ""} src={item.menu_image} alt='' />
-                            <p>{item.menu_name}</p>
+                            <img className={category===item[0] ? "active" : ""} src={item[1][1].image} alt='' />
+                            <p>{item[0]}</p>
                         </div>
                     )
                 })}

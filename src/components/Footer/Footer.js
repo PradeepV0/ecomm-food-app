@@ -7,7 +7,8 @@ const Footer = () => {
     <div className='footer' id='footer'>
         <div className='footer-content'>
             <div className='footer-content-left'>
-                <img src={assets.logo} alt='' />
+                {/* <img src={assets.logo} alt='' /> */}
+                <h1>Rider Food</h1>
                 <p>Food is a necessary nourishment for every living being to survive. Every living creature needs food in addition to clothing and shelter in order to exist.</p>
                 <div className='footer-social-icons'>
                 <img src={assets.facebook_icon} alt='' />
@@ -34,7 +35,7 @@ const Footer = () => {
         </div>
         <hr />
         <p className='footer-copyright'>
-            CopyRight 2024 $ Tomato.com - All Right Reserved
+            CopyRight 2024 ₹ Rider Food.com - All Right Reserved
         </p>
     </div>
   )
