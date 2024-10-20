@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import './Cart.css'
 import { StoreContext } from '../../Context/StoreContext'
 import { useNavigate } from 'react-router-dom';
@@ -8,6 +8,14 @@ const Cart = (props) => {
 
   const { cartItem, productList, removeFromCard, getTotalCartAmount } = useContext(StoreContext);
   const navigate = useNavigate();
+  const [cartAmount,setCartAmount] = useState(0)
+
+  useEffect(()=>{ 
+  const value =   getTotalCartAmount()
+   setCartAmount(value)
+  
+},[])
+
 
   const processToCheckOut = ()=>{
    const isLogged = localStorage.getItem("Token")
@@ -57,17 +65,17 @@ const Cart = (props) => {
           <div>
             <div className="cart-total-details">
               <p>SubTotal</p>
-              <p>₹{getTotalCartAmount()}</p>
+              <p>₹{cartAmount}</p>
             </div>
             <hr />
             <div className="cart-total-details">
               <p>Delivery Fee</p>
-              <p>₹{getTotalCartAmount() === 0 ? 0 : 2}</p>
+              <p>₹{cartAmount === 0 ? 0 : 2}</p>
             </div>
             <hr />
             <div className="cart-total-details">
               <b>Total</b>
-              <b>₹{getTotalCartAmount() === 0 ? 0 : getTotalCartAmount() + 2}</b>
+              <b>₹{cartAmount === 0 ? 0 : cartAmount + 2}</b>
             </div>
           </div>
           <button onClick={() => processToCheckOut()}>PROCEED TO CHECKOUT</button>

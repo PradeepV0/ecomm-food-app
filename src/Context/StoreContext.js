@@ -51,18 +51,18 @@ const StoreContextProvider = (props) => {
 
     const getTotalCartAmount = () => {
         let totalAmount = 0;
-        const response = getIndianFoods()        
-        response.then(
-            (res)=>{
+        // const response = productList        
+        // response.then(
+        //     (res)=>{
       
         for (const item in cartItem) {
             if (cartItem[item] > 0) {
-                let itemInfo = res.response.find((product) => product._id === item)
+                let itemInfo = productList.find((product) => product._id === item)
                 totalAmount += itemInfo.price * cartItem[item];
             }
         }
-    }
-)
+//     }
+// )
         return totalAmount;
     }
 
