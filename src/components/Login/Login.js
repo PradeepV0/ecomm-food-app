@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import './Login.css'
 import { assets } from '../../assets/assets'
 import { login, signUp } from '../../APi/Api\'s'
-import { successToaster, warningToaster } from '../../Toaster/ALertToaster'
+import { successToaster } from '../../Toaster/ALertToaster'
 
 
 const getInitialState = () =>{

@@ -9,7 +9,9 @@ const ExploreMenu = ({ category, setCategory }) => {
 
     useEffect(()=>{
         getMenuList()
+        // eslint-disable-next-line
     },[productList])
+
     const getMenuList = () =>{
         if(productList.length > 0){
             const catageryLs =    productList.reduce((acc, item) => {
