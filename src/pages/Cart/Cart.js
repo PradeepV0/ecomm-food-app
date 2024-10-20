@@ -9,12 +9,26 @@ const Cart = (props) => {
   const { cartItem, productList, removeFromCard, getTotalCartAmount } = useContext(StoreContext);
   const navigate = useNavigate();
   const [cartAmount,setCartAmount] = useState(0)
+  const [remove,setRemove] = useState(0)
+
 
   useEffect(()=>{ 
   const value =   getTotalCartAmount()
    setCartAmount(value)
   // eslint-disable-next-line
+},[remove])
+
+
+useEffect(()=>{ 
+  const value =   getTotalCartAmount()
+   setCartAmount(value)
+  // eslint-disable-next-line
 },[])
+
+const removeCart = (id) =>{
+  removeFromCard(id)
+  setRemove(remove +1)
+}
 
 
   const processToCheckOut = ()=>{
@@ -50,7 +64,7 @@ const Cart = (props) => {
                   <p>₹{item.price}</p>
                   <p>{cartItem[item._id]}</p>
                   <p>₹{item.price * cartItem[item._id]}</p>
-                  <p onClick={() => removeFromCard(item._id)} className='cross'>-</p>
+                  <p onClick={() => removeCart(item._id)} className='cross'>-</p>
                 </div>
                 <hr />
               </div>
