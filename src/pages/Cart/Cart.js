@@ -13,7 +13,7 @@ const Cart = (props) => {
   useEffect(()=>{ 
   const value =   getTotalCartAmount()
    setCartAmount(value)
-  
+  // eslint-disable-next-line
 },[])
 
 
