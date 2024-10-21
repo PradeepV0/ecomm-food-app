@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import './Login.css'
 import { assets } from '../../assets/assets'
 import { login, signUp } from '../../APi/Api\'s'
-import { successToaster } from '../../Toaster/ALertToaster'
+import { errorToaster, successToaster } from '../../Toaster/ALertToaster'
 
 
 const getInitialState = () =>{
@@ -43,10 +43,17 @@ const [state,setState] = useState(getInitialState())
     const response = login(JSON.stringify(reqObj))
     response.then(
       (data)=>{
+        if(data === undefined){
+          errorToaster('User Name Or Password Wrong')
+          return
+        }
         successToaster('Successfull Sign IN')
         setShowLogin(false)
 
-      })
+      },
+    (err)=>{
+      
+    })
   }
   }
 
